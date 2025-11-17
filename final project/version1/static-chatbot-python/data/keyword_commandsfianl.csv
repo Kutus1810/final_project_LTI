@@ -1,0 +1,180 @@
+Keyword,Commands
+get,"oc get pv
+oc get pvc
+oc get storageclass
+oc get sc
+oc get events
+oc get pods
+oc get svc
+oc get deploy
+oc get all
+oc get nodes
+oc get co
+oc get clusterversion
+oc get csr
+oc get operators
+oc get csv -n <namespace>
+oc get sub -n <namespace>
+oc get packagemanifest
+oc get crd
+oc get <crd-short> -A
+oc get quota
+oc get routes
+oc get is
+oc get secrets
+oc get cm
+oc get users
+oc get rolebindings -n <ns>
+oc get clusterrolebindings
+oc get endpoints
+oc get builds
+oc get apiservices
+oc get prometheusrule -n openshift-monitoring
+oc get all -A
+rosa list clusters
+rosa list nodepools
+az aro list
+velero backup get"
+describe,"oc describe pv <pv>
+oc describe pvc <pvc>
+oc describe sc <storageclass>
+oc describe pod <pod>
+oc describe svc <svc>
+oc describe dc <deploymentConfig>
+oc describe node <node>
+oc describe quota
+oc describe co <name>
+oc describe clusterversion
+oc describe csv <csv-name> -n <ns>
+oc describe subscription <sub-name> -n <ns>
+oc describe rolebinding <rb> -n <ns>
+oc describe route <route> -n <ns>"
+create,"oc create -f pvc.yaml
+oc create -f storageclass.yaml
+oc create configmap <name> --from-file=...
+oc create secret generic <name> --from-literal=key=value
+oc create serviceaccount <sa> -n <ns>
+oc create role <role>
+oc create clusterrole <role>
+oc create clusterrolebinding <binding>
+oc create -f operatorgroup.yaml
+oc create -f subscription.yaml
+oc create route edge <name> --service=<svc>
+oc create user <name>
+oc create -f custom-resource.yaml
+oc create new-build --name=<name> <git-repo>
+rosa create cluster --cluster-name <name>
+rosa create nodepool -c <cluster> --replicas=3
+az aro create --resource-group <rg> --name <cluster>
+velero backup create <name>
+velero restore create --from-backup <backup>"
+apply,"oc apply -f pvc.yaml
+oc apply -f storageclass.yaml
+oc apply -f operatorgroup.yaml
+oc apply -f subscription.yaml
+oc apply -f custom-resource.yaml
+oc apply -k <kustomize-dir>
+oc apply -f <manifest-dir>
+oc process -f template.yaml -p PARAM=value | oc apply -f -"
+delete,"oc delete pvc <name>
+oc delete -f pvc.yaml
+oc delete project <name>
+oc delete pod <pod>
+oc delete clusterrole <role>
+oc delete route <route>
+rosa delete cluster -c <name>
+az aro delete -n <cluster> -g <rg>"
+auth,"oc auth can-i list
+oc auth can-i get pods -n <ns>
+oc auth can-i <verb> <resource> -n <ns>
+oc auth whoami"
+login,"oc login https://api.cluster:6443
+oc login -u <user> -p <pass>
+oc login --token=<token> --server=<api-url>
+rosa login
+az login
+awx login"
+logs,"oc logs <pod>
+oc logs -f <pod>
+oc logs <pod> -c <container>
+oc logs -f bc/<buildconfig>
+oc logs deployment/<operator> -n <ns>
+rosa logs (diagnostics)
+velero logs <backup>"
+exec,"oc exec <pod> -- ls
+oc exec -it <pod> -- bash
+oc exec -n openshift-monitoring <pod> -- curl localhost"
+scale,"oc scale deploy <name> --replicas=3
+oc scale dc <name> --replicas=2
+rosa create nodepool --replicas=<n>"
+rollout,"oc rollout status deploy/<name>
+oc rollout history deploy/<name>
+oc rollout undo deploy/<name>"
+expose,"oc expose svc <service>
+oc expose pod <pod> --port=8080
+oc expose svc/<svc> --hostname=custom.domain"
+patch,"oc patch pvc <name> -p '{""spec"":{""resources"":{""requests"":{""storage"":""<size>""}}}}'
+oc patch clusterversion version --type=merge -p '{""spec"":{""channel"":""stable""}}'"
+adm,"oc adm top nodes
+oc adm top pods
+oc adm policy add-role-to-user <role> <user> -n <ns>
+oc adm policy add-cluster-role-to-user <role> <user>
+oc adm policy add-scc-to-user <scc> -z <sa>
+oc adm policy remove-scc-from-user <scc> <user>
+oc adm upgrade
+oc adm must-gather
+oc adm inspect
+oc adm manage-node <node> --schedulable
+oc adm cordon <node>
+oc adm uncordon <node>
+oc adm cluster-info
+oc adm node-logs <node>"
+port-forward,"oc port-forward pod/<pod> 8080:80
+oc port-forward svc/<svc> 9090:9090"
+start-build,"oc start-build <buildconfig>
+oc start-build <bc> --from-dir=."
+rsync / cp,"oc rsync <local-dir> <pod>:/path
+oc cp <pod>:/path ./local"
+new-app / new-build,"oc new-app <image or template>
+oc new-build <git repo>"
+tag,oc tag <image>:<tag> <is-name>:<tag>
+import-image,oc import-image <image-stream> --confirm
+api / explain,"oc api-resources
+oc explain pv
+oc explain pvc
+oc explain deployment"
+debug,"oc debug node/<node>
+oc debug pod/<pod>"
+completion / config,"oc config view
+oc config get-contexts
+oc config use-context <context>
+oc completion bash"
+velero,"velero install --provider <provider> --bucket <bucket>
+velero backup create <name>
+velero restore create --from-backup <backup>
+velero backup get"
+rosa,"rosa login
+rosa create cluster
+rosa list clusters
+rosa describe cluster -c <name>
+rosa create nodepool -c <cluster>
+rosa delete cluster
+rosa upgrade cluster -c <cluster>"
+az aro,"az login
+az aro list
+az aro show -n <cluster> -g <rg>
+az aro create -n <cluster> -g <rg>
+az aro delete -n <cluster> -g <rg>
+az aro list-credentials -n <cluster> -g <rg>"
+ansible,"ansible -m ping all
+ansible-playbook playbook.yml
+ansible-playbook -i inventory playbook.yml --check --diff
+ansible-vault encrypt file
+ansible-vault decrypt file
+ansible-doc -l"
+awx / tower,"awx login
+awx projects list
+awx job_templates launch <id>
+awx jobs list
+awx organizations list
+tower-cli config"
